@@ -1,0 +1,15 @@
+# FastF1 cache
+fastf1_cache/
+
+# Flutter
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/

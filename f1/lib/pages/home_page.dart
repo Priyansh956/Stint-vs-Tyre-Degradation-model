@@ -22,30 +22,26 @@ class _HomePageState extends State<HomePage> {
   Map<int, StintAnalysis>? _results;
 
   Future<void> _analyze() async {
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-      _results = null;
-    });
+  setState(() {
+    _isLoading = true;
+    _errorMessage = null;
+    _results = null;
+  });
 
-    try {
-      final year = int.parse(_yearController.text);
-      final results = await AnalysisService.analyzeRace(
-        year: year,
-        race: _raceController.text,
-        driver: _driverController.text,
-      );
-      setState(() {
-        _results = results;
-      });
+  try {
+    final year = int.tryParse(_yearController.text);
+    if (year == null) throw Exception("Invalid year");
+
+    final results = await AnalysisService.analyzeRace(
+      year: year,
+      race: _raceController.text.trim(),
+      driver: _driverController.text.trim().toUpperCase(),
+    );
+    setState(() => _results = results);
     } catch (e) {
-      setState(() {
-        _errorMessage = e.toString();
-      });
+      setState(() => _errorMessage = e.toString().replaceFirst("Exception: ", ""));
     } finally {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
     }
   }
 
